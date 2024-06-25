@@ -1,8 +1,12 @@
-package org.example.mybatis.mapper;
+package org.example.api.mapper;
 
-import org.example.mybatis.pojo.User;
+import org.example.api.model.User;
 
 public interface UserMapper {
+
+//    统计注册人数
+    int selectCountUser();
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(User row);
@@ -14,4 +18,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User row);
 
     int updateByPrimaryKey(User row);
+
+
 }

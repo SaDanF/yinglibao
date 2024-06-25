@@ -1,6 +1,6 @@
-package org.example.mybatis.mapper;
+package org.example.api.mapper;
 
-import org.example.mybatis.pojo.FinanceAccount;
+import org.example.api.model.FinanceAccount;
 
 public interface FinanceAccountMapper {
     int deleteByPrimaryKey(Integer id);

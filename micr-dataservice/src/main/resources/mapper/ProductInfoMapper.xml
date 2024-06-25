@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.example.mybatis.mapper.ProductInfoMapper">
-  <resultMap id="BaseResultMap" type="org.example.mybatis.pojo.ProductInfo">
+<mapper namespace="org.example.api.mapper.ProductInfoMapper">
+  <resultMap id="BaseResultMap" type="org.example.api.model.ProductInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
     <result column="rate" jdbcType="DECIMAL" property="rate" />
@@ -18,6 +18,29 @@
     <result column="product_desc" jdbcType="VARCHAR" property="productDesc" />
     <result column="version" jdbcType="INTEGER" property="version" />
   </resultMap>
+
+  <!--  计算利率平均值-->
+  <select id="selectAvgRate" resultType="java.math.BigDecimal">
+    SELECT ROUND(AVG(rate),2) as avgRate from b_product_info
+  </select>
+
+<!--  查询分页信息-->
+  <select id="selectByTypeLimit" resultType="org.example.api.model.ProductInfo">
+    select * from b_product_info where product_type = 2 limit 0,4
+  </select>
+<!--  //    某个产品类型的记录总数，用于下班的分页-->
+  <select id="selectCounByType" resultType="java.lang.Integer">
+
+    SELECT COUNT(id) as nums FROM b_product_info  WHERE product_type=#{ptype}
+
+  </select>
+
+
+
+
+
+
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -81,7 +104,7 @@
     left_product_money, bid_min_limit, bid_max_limit, product_status, product_full_time, 
     product_desc, version
   </sql>
-  <select id="selectByExample" parameterType="org.example.mybatis.pojo.ProductInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.example.api.model.ProductInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -105,13 +128,13 @@
     delete from b_product_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.example.mybatis.pojo.ProductInfoExample">
+  <delete id="deleteByExample" parameterType="org.example.api.model.ProductInfoExample">
     delete from b_product_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.example.mybatis.pojo.ProductInfo">
+  <insert id="insert" parameterType="org.example.api.model.ProductInfo">
     insert into b_product_info (id, product_name, rate, 
       cycle, release_time, product_type, 
       product_no, product_money, left_product_money, 
@@ -125,7 +148,7 @@
       #{productFullTime,jdbcType=TIMESTAMP}, #{productDesc,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.example.mybatis.pojo.ProductInfo">
+  <insert id="insertSelective" parameterType="org.example.api.model.ProductInfo">
     insert into b_product_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -222,12 +245,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.example.mybatis.pojo.ProductInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.example.api.model.ProductInfoExample" resultType="java.lang.Long">
     select count(*) from b_product_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
+
+
   <update id="updateByExampleSelective" parameterType="map">
     update b_product_info
     <set>
@@ -302,7 +328,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.example.mybatis.pojo.ProductInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="org.example.api.model.ProductInfo">
     update b_product_info
     <set>
       <if test="productName != null">
@@ -350,7 +376,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.example.mybatis.pojo.ProductInfo">
+  <update id="updateByPrimaryKey" parameterType="org.example.api.model.ProductInfo">
     update b_product_info
     set product_name = #{productName,jdbcType=VARCHAR},
       rate = #{rate,jdbcType=DECIMAL},

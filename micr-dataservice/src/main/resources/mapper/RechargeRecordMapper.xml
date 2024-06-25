@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.example.mybatis.mapper.RechargeRecordMapper">
-  <resultMap id="BaseResultMap" type="org.example.mybatis.pojo.RechargeRecord">
+<mapper namespace="org.example.api.mapper.RechargeRecordMapper">
+  <resultMap id="BaseResultMap" type="org.example.api.model.RechargeRecord">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="recharge_no" jdbcType="VARCHAR" property="rechargeNo" />
@@ -25,7 +25,7 @@
     delete from b_recharge_record
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.example.mybatis.pojo.RechargeRecord">
+  <insert id="insert" parameterType="org.example.api.model.RechargeRecord">
     insert into b_recharge_record (id, uid, recharge_no, 
       recharge_status, recharge_money, recharge_time, 
       recharge_desc, channel)
@@ -33,7 +33,7 @@
       #{rechargeStatus,jdbcType=INTEGER}, #{rechargeMoney,jdbcType=DECIMAL}, #{rechargeTime,jdbcType=TIMESTAMP}, 
       #{rechargeDesc,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.example.mybatis.pojo.RechargeRecord">
+  <insert id="insertSelective" parameterType="org.example.api.model.RechargeRecord">
     insert into b_recharge_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -88,7 +88,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.example.mybatis.pojo.RechargeRecord">
+  <update id="updateByPrimaryKeySelective" parameterType="org.example.api.model.RechargeRecord">
     update b_recharge_record
     <set>
       <if test="uid != null">
@@ -115,7 +115,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.example.mybatis.pojo.RechargeRecord">
+  <update id="updateByPrimaryKey" parameterType="org.example.api.model.RechargeRecord">
     update b_recharge_record
     set uid = #{uid,jdbcType=INTEGER},
       recharge_no = #{rechargeNo,jdbcType=VARCHAR},

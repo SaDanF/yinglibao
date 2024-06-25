@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.example.mybatis.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="org.example.mybatis.pojo.User">
+<mapper namespace="org.example.api.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="org.example.api.model.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="login_password" jdbcType="VARCHAR" property="loginPassword" />
@@ -11,6 +11,12 @@
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
     <result column="header_image" jdbcType="VARCHAR" property="headerImage" />
   </resultMap>
+<!--  注册的用户数-->
+  <select id="selectCountUser" resultType="java.lang.Integer">
+    SELECT COUNT(id) as ct FROM u_user
+  </select>
+
+
   <sql id="Base_Column_List">
     id, phone, login_password, name, id_card, add_time, last_login_time, header_image
   </sql>
@@ -24,7 +30,7 @@
     delete from u_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.example.mybatis.pojo.User">
+  <insert id="insert" parameterType="org.example.api.model.User">
     insert into u_user (id, phone, login_password, 
       name, id_card, add_time, 
       last_login_time, header_image)
@@ -32,7 +38,7 @@
       #{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
       #{lastLoginTime,jdbcType=TIMESTAMP}, #{headerImage,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.example.mybatis.pojo.User">
+  <insert id="insertSelective" parameterType="org.example.api.model.User">
     insert into u_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -87,7 +93,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.example.mybatis.pojo.User">
+  <update id="updateByPrimaryKeySelective" parameterType="org.example.api.model.User">
     update u_user
     <set>
       <if test="phone != null">
@@ -114,7 +120,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.example.mybatis.pojo.User">
+  <update id="updateByPrimaryKey" parameterType="org.example.api.model.User">
     update u_user
     set phone = #{phone,jdbcType=VARCHAR},
       login_password = #{loginPassword,jdbcType=VARCHAR},

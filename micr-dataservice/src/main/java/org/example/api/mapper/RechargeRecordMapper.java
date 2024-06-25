@@ -1,6 +1,6 @@
-package org.example.mybatis.mapper;
+package org.example.api.mapper;
 
-import org.example.mybatis.pojo.RechargeRecord;
+import org.example.api.model.RechargeRecord;
 
 public interface RechargeRecordMapper {
     int deleteByPrimaryKey(Integer id);

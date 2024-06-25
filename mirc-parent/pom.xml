@@ -1,6 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.3</version>
+    </parent>
+
     <groupId>org.example</groupId>
     <artifactId>mirc-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -10,11 +18,127 @@
     <modules>
 <!--        <module>mirc-api</module>-->
         <module>../micr-api</module>
+        <module>../micr-dataservice</module>
+        <module>../mir-web</module>
+        <module>../mirc-common</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <dubbo.vesion>2.7.8</dubbo.vesion>
+        <zookeeper.version>2.7.8</zookeeper.version>
+        <mybatis.version>2.2.2</mybatis.version>
+        <fastjson.version>1.2.51</fastjson.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <swagger2github.version>1.9.6</swagger2github.version>
+        <junit.version>4.13.2</junit.version>
+        <lombok.version>1.18.30</lombok.version>
     </properties>
+
+<!--    管理依赖-->
+    <dependencyManagement>
+        <dependencies>
+<!--        声明项目使用的gav-->
+<!--        dubbo的依赖-->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.vesion}</version>
+            </dependency>
+
+<!--            zookeeper的依赖-->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+                <type>pom</type>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+<!--            mybatis的依赖-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+<!--            fastjson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+<!--            httpclient的依赖spring自己有所以不用加-->
+
+<!--            swagger的依赖-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger2github.version}</version>
+            </dependency>
+
+
+
+            <!--            测试的依赖-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.13.2</version>
+                <scope>${junit.version}</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+
+
+
+
+
+        </dependencies>
+
+
+
+
+
+    </dependencyManagement>
+
+<!--    统一jdk-->
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+<!--                插件版本-->
+                <version>3.8.1</version>
+<!--                编译级别-->
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
 </project>

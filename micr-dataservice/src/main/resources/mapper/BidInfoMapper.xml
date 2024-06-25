@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.example.mybatis.mapper.BidInfoMapper">
-  <resultMap id="BaseResultMap" type="org.example.mybatis.pojo.BidInfo">
+<mapper namespace="org.example.api.mapper.BidInfoMapper">
+  <resultMap id="BaseResultMap" type="org.example.api.model.BidInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="loan_id" jdbcType="INTEGER" property="loanId" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
@@ -9,6 +9,11 @@
     <result column="bid_time" jdbcType="TIMESTAMP" property="bidTime" />
     <result column="bid_status" jdbcType="INTEGER" property="bidStatus" />
   </resultMap>
+<!--计算总金额-->
+  <select id="selectSumBidMoney" resultType="java.math.BigDecimal">
+    SELECT ROUND(SUM(bid_money),0) as sumBidMoney from b_bid_info
+  </select>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -70,7 +75,7 @@
   <sql id="Base_Column_List">
     id, loan_id, uid, bid_money, bid_time, bid_status
   </sql>
-  <select id="selectByExample" parameterType="org.example.mybatis.pojo.BidInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.example.api.model.BidInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -94,13 +99,13 @@
     delete from b_bid_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.example.mybatis.pojo.BidInfoExample">
+  <delete id="deleteByExample" parameterType="org.example.api.model.BidInfoExample">
     delete from b_bid_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.example.mybatis.pojo.BidInfo">
+  <insert id="insert" parameterType="org.example.api.model.BidInfo">
     insert into b_bid_info (id, loan_id, uid, 
       bid_money, bid_time, bid_status
       )
@@ -108,7 +113,7 @@
       #{bidMoney,jdbcType=DECIMAL}, #{bidTime,jdbcType=TIMESTAMP}, #{bidStatus,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.example.mybatis.pojo.BidInfo">
+  <insert id="insertSelective" parameterType="org.example.api.model.BidInfo">
     insert into b_bid_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -151,13 +156,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.example.mybatis.pojo.BidInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.example.api.model.BidInfoExample" resultType="java.lang.Long">
     select count(*) from b_bid_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+
+    <update id="updateByExampleSelective" parameterType="map">
     update b_bid_info
     <set>
       <if test="row.id != null">
@@ -195,7 +201,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.example.mybatis.pojo.BidInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="org.example.api.model.BidInfo">
     update b_bid_info
     <set>
       <if test="loanId != null">
@@ -216,7 +222,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.example.mybatis.pojo.BidInfo">
+  <update id="updateByPrimaryKey" parameterType="org.example.api.model.BidInfo">
     update b_bid_info
     set loan_id = #{loanId,jdbcType=INTEGER},
       uid = #{uid,jdbcType=INTEGER},

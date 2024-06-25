@@ -1,12 +1,13 @@
-package org.example.mybatis.pojo;
+package org.example.api.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class ProductInfoExample {
+public class ProductInfoExample implements Serializable{
     protected String orderByClause;
 
     protected boolean distinct;

@@ -1,0 +1,31 @@
+#服务名称
+spring:
+  application:
+    name: mirc-dataservice
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ylb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+
+#    设置mybatis
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+  configuration:
+#    打印日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+#dubbo的配置
+dubbo:
+  registry:
+    address: zookeeper://localhost:2181
+  scan:
+    base-packages: org.example.mybatis.service
+  provider:
+    timeout: 50000
+    retries: 0
+
+#
+server:
+  port: 8081

@@ -1,11 +1,17 @@
-package org.example.mybatis.mapper;
+package org.example.api.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.example.mybatis.pojo.BidInfo;
-import org.example.mybatis.pojo.BidInfoExample;
+import org.example.api.model.BidInfo;
+import org.example.api.model.BidInfoExample;
 
 public interface BidInfoMapper {
+
+//    计算累计金额
+    BigDecimal selectSumBidMoney();
+
+
     long countByExample(BidInfoExample example);
 
     int deleteByExample(BidInfoExample example);
